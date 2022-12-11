@@ -1,0 +1,253 @@
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css);
+
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+    background: #18485B;
+    scroll-behavior: smooth;
+}
+#wholeWrapper {
+    width: 80%;
+    background-color: #18485B;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+}
+
+.navbarDiv{
+    display: block;
+}
+
+.mainNavbar{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+}
+#banks div:hover, .same-as-selected {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+#listBanks a {
+    padding-right: 20px;
+}
+#listBanks a img{
+    width: 100px;
+    height: 100px;
+    margin-top: 20px;
+    border: 2px solid #1BB05D;
+    border-radius: 5px;
+}
+
+#listBanks h1{
+    color: whitesmoke;
+}
+.active{
+    background-color: #1BB05D;
+}
+#mapCanvas{
+    margin-top: 100px;
+}
+#mapCanvas h1{
+    color: whitesmoke;
+}
+#RadioButtons > span:nth-child(1){
+    margin-right: 30px;
+}
+
+.navbarDiv ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+.navbarDiv li {
+    float: right;
+}
+
+.navbarDiv li a {
+    display: block;
+    color: whitesmoke;
+    text-align: center;
+    padding: 14px 30px;
+    text-decoration: none;
+}
+
+.mainNavbar > li:nth-child(1){
+    margin-right: 200px;
+}
+
+
+.center {
+    text-align: center;
+}
+
+#bankChoice{
+    float: left;
+    background-color: #333;
+    border-radius: 15px;
+    height: 80px;
+    width: 350px;
+    margin-left: 200px;
+
+}
+
+#banks {
+    position: absolute;
+    padding: 4px 10px 5px 20px;
+    margin-top: -15px;
+    margin-left: -64px;
+    margin-right: auto;
+    color: whitesmoke;
+    background-color: #737B80;
+    border-radius: 12px;
+
+}
+.container{
+    border-radius: 12px;
+    padding-left: 10px;
+}
+
+#buttons{
+    float: right;
+    background-color: #333;
+    border-radius: 15px;
+    height: 80px;
+    width: 350px;
+    margin-right: 200px;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+#buttons h4{
+    color: whitesmoke;
+}
+
+#RadioButtons{
+    width: auto;
+    margin-top: -15px;
+    padding: 4px 10px 5px 20px;
+}
+
+#buttons .container{
+    color: whitesmoke;
+    background-color: #737B80;
+    padding: 5px 20px 5px 20px;
+}
+
+#labelBanks{
+    color: whitesmoke;
+}
+
+
+
+#map {
+    width: 80%;
+    height: 600px;
+    margin: auto;
+    border-radius: 10px;
+}
+
+.footer {
+    background-color: #333;
+    height: 50px;
+    background-size: cover;
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 50px;
+}
+
+.footer p {
+    color: whitesmoke;
+    text-align: center;
+    padding-top: 20px;
+    margin-top: 0;
+}
+
+
+.social-container {
+    width: 400px;
+    margin: 27vh auto;
+    text-align: center;
+}
+
+.social-icons {
+    padding: 0;
+    list-style: none;
+    margin: 1em;
+}
+
+.social-icons li {
+    display: inline-block;
+    margin: 0.15em;
+    position: relative;
+    font-size: 1.2em;
+}
+
+.social-icons i {
+    color: #fff;
+    position: absolute;
+    top: 21px;
+    left: 21px;
+    transition: all 265ms ease-out;
+}
+
+.social-icons a {
+    display: inline-block;
+}
+
+.social-icons a:before {
+    transform: scale(1);
+    -ms-transform: scale(1);
+    -webkit-transform: scale(1);
+    content: " ";
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    display: block;
+    background: linear-gradient(45deg, #ff003c, #c648c8);
+    transition: all 265ms ease-out;
+}
+
+.social-icons a:hover:before {
+    transform: scale(0);
+    transition: all 265ms ease-in;
+}
+
+.social-icons a:hover i {
+    transform: scale(2.2);
+    -ms-transform: scale(2.2);
+    -webkit-transform: scale(2.2);
+    color: #ff003c;
+    background: -webkit-linear-gradient(45deg, #ff003c, #c648c8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 265ms ease-in;
+}
+
+.social-icons a.social-square:before {
+    background: linear-gradient(45deg, #7b00e0, #ae31d9);
+    border-radius: 10%;
+}
+
+.social-icons a.social-square:hover:before {
+    transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    -webkit-transform: scale(-180%);
+    border-radius: 100%;
+}
+
+.social-icons a.social-square:hover i {
+    transform: scale(1.6);
+    -ms-transform: scale(1.6);
+    -webkit-transform: scale(1.6);
+    color: #fff;
+    -webkit-text-fill-color: #fff;
+}
+
+
