@@ -5,8 +5,9 @@
 
     <link rel="stylesheet" href="style.css"/>
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"/>
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"/>
+
 
     <link rel="stylesheet" href="//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css" type="text/css">
     <script src="//unpkg.com/leaflet-gesture-handling"></script>
@@ -23,10 +24,7 @@
     </ul>
 </div>
 
-
 <div class="center" id="wholeWrapper">
-
-
 
 <div class="center" id="listBanks">
     <h1>Lists of Banks</h1>
@@ -41,11 +39,10 @@
     <a href="https://www.pcb.mk/private_clients.nspx" target="_blank"><img src="./img/ProCredit.jpg" style="width: 100px" alt="procredit picture"></a>
 </div>
 
-
 <div class="center" id="mapCanvas">
     <h1>Map View</h1>
 
-    <div id="bankChoice">
+    <div id="dropdownBankChoice">
     <h4 id="labelBanks">Одберете ја посакуваната банка:</h4>
         <label for="banks"></label><select onchange="getData()" name="banks" id="banks">
         <option value="komercijalna">Komercijalna</option>
@@ -60,17 +57,17 @@
     </select>
     </div>
 
-    <div id="buttons">
+    <div id="buttonChoices">
         <h4>Селектирајте ги посакуваните опции:</h4>
-    <div id="RadioButtons">
-        <span class="container">Филијали
+    <div id="checkBoxButtons">
+        <span class="checkBoxButtonName">Филијали
             <label>
             <input type="checkbox" checked="checked">
             </label>
             <span class="checkmark"></span>
         </span>
 
-        <span class="container">ATM
+        <span class="checkBoxButtonName">ATM
             <label>
             <input type="checkbox" checked="checked">
             </label>
@@ -91,7 +88,5 @@
 
 </body>
 <script src="scripts.js"></script>
-
-
 
 </html>

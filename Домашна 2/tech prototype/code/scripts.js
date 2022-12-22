@@ -1,4 +1,6 @@
 
+let L = window.L;
+
 let map = L.map('map', {
     center: [42.0020,21.4032],
     zoom: 14,
@@ -53,4 +55,3 @@ async function getData(){
     })
 
 }
-
