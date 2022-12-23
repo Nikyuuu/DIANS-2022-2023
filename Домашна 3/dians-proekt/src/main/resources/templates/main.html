@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+        integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+        crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+          integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+          crossorigin=""></script>
+
+  <link rel="stylesheet" href="//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css"
+        type="text/css">
+  <script src="//unpkg.com/leaflet-gesture-handling"></script>
+
+
+  <title>Home page</title>
+  <style>
+    /* whole body */
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+      background: #18485B;
+      scroll-behavior: smooth;
+    }
+
+    #wholeWrapper {
+      width: 80%;
+      background-color: #18485B;
+      margin-left: auto;
+      margin-right: auto;
+      height: auto;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    /* NAVBAR */
+    .navbarDiv {
+      display: block;
+    }
+
+    .mainNavbar {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      width: auto;
+    }
+
+    .navbarDiv li {
+      float: right;
+    }
+
+    .navbarDiv li a {
+      display: block;
+      color: whitesmoke;
+      text-align: center;
+      padding: 14px 30px;
+      text-decoration: none;
+    }
+
+    .mainNavbar > li:nth-child(1) {
+      margin-right: 200px;
+    }
+
+    .navbarDiv ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    .active {
+      background-color: #1BB05D;
+    }
+
+    /* Banks List */
+    #banks div:hover, .same-as-selected {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    #listBanks a {
+      padding-right: 20px;
+    }
+
+    #listBanks a img {
+      width: 100px;
+      height: 100px;
+      margin-top: 20px;
+      border: 2px solid #1BB05D;
+      border-radius: 5px;
+    }
+
+    #listBanks h1 {
+      color: whitesmoke;
+    }
+
+    /* map */
+    #mapCanvas {
+      margin-top: 100px;
+    }
+
+    #mapCanvas h1 {
+      color: whitesmoke;
+    }
+
+    /* map checkBoxButtons */
+    #buttonChoices {
+      float: right;
+      background-color: #333;
+      border-radius: 15px;
+      height: 80px;
+      width: 400px;
+      margin-right: 200px;
+      text-align: center;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    #buttonChoices h4 {
+      color: whitesmoke;
+    }
+
+    #checkBoxButtons {
+      width: auto;
+      margin-top: -15px;
+      padding: 4px 10px 5px 20px;
+    }
+
+    #checkBoxButtons > span:nth-child(1) {
+      margin-right: 10px;
+    }
+
+    #checkBoxButtons > span:nth-child(2) {
+      margin-right: 10px;
+    }
+
+    .checkBoxButtonName {
+      border-radius: 12px;
+      padding-left: 10px;
+    }
+
+    #buttonChoices .checkBoxButtonName {
+      color: whitesmoke;
+      background-color: #737B80;
+      padding: 5px 20px 5px 20px;
+    }
+    .filter-btn{
+      float: right;
+      border-radius: 12px;
+      color: whitesmoke;
+      background-color: #737B80;
+      text-align: center;
+      justify-content: center;
+      height: 25px;
+      width: 75px;
+      cursor: pointer;
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+
+
+    .filter-btn {
+      float: right;
+      border-radius: 12px;
+      color: whitesmoke;
+      background-color: #737B80;
+      text-align: center;
+      justify-content: center;
+      height: 25px;
+      width: 75px;
+      cursor: pointer;
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+
+
+    /*map dropdownList */
+    #dropdownBankChoice {
+      float: left;
+      background-color: #333;
+      border-radius: 15px;
+      height: 80px;
+      width: 400px;
+      margin-left: 200px;
+    }
+
+    #labelBanks {
+      color: whitesmoke;
+    }
+
+    #banks {
+      position: absolute;
+      padding: 4px 10px 5px 20px;
+      margin-top: -15px;
+      margin-left: -64px;
+      margin-right: auto;
+      color: whitesmoke;
+      background-color: #737B80;
+      border-radius: 12px;
+    }
+
+    /* map */
+    #map {
+      width: 80%;
+      height: 600px;
+      margin: auto;
+      border-radius: 10px;
+    }
+
+    /* footer */
+    .footer {
+      background-color: #333;
+      height: 50px;
+      background-size: cover;
+      width: 100%;
+      margin-right: auto;
+      margin-left: auto;
+      margin-top: 50px;
+    }
+
+    .footer p {
+      color: whitesmoke;
+      text-align: center;
+      padding-top: 20px;
+      margin-top: 0;
+    }
+  </style>
+
+</head>
+<body>
+
+<!--navbar-->
+<div class="navbarDiv">
+  <ul class="mainNavbar">
+    <li><a class="active" href="/home">Home</a></li>
+    <li><a href="/about">About</a></li>
+  </ul>
+</div>
+<!--navbar-->
+
+<div class="center" id="wholeWrapper">
+
+
+  <!--list banks-->
+  <div class="center" id="listBanks">
+    <h1>Lists of Banks</h1>
+    <a href="https://halkbank.mk/" target="_blank"><img th:src="@{/halkbank.jpg}" style="width: 100px" height=""
+                                                        alt="halkbank picture"></a>
+    <a href="https://www.kb.com.mk/" target="_blank"><img th:src="@{/komercijalna.jpg}" style="width: 100px"
+                                                          alt="komercijalna picture"></a>
+    <a href="https://sparkasse.mk/" target="_blank"><img th:src="@{/sparkasse.jpg}" style="width: 100px"
+                                                         alt="sparkasse picture"></a>
+    <a href="https://nlb.mk/" target="_blank"><img th:src="@{/nlb.jpg}" style="width: 100px" alt="nlb picture"></a>
+    <a href="https://www.stb.com.mk/" target="_blank"><img th:src="@{/stopanska.jpg}" style="width: 100px"
+                                                           alt="stopanska picture"></a>
+    <a href="https://www.ttk.com.mk/" target="_blank"><img th:src="@{/ttk.jpg}" style="width: 100px"
+                                                           alt="ttk picture"></a>
+    <a href="https://www.unibank.mk/" target="_blank"><img th:src="@{/uni.jpg}" style="width: 100px"
+                                                           alt="unibank picture"></a>
+    <a href="https://silkroadbank.com.mk/" target="_blank"><img th:src="@{silkroad.jpg}" style="width: 100px"
+                                                                alt="silkroad picture"></a>
+    <a href="https://www.pcb.mk/private_clients.nspx" target="_blank"><img th:src="@{/procredit.jpg}"
+                                                                           style="width: 100px"
+                                                                           alt="procredit picture"></a>
+  </div>
+  <!--list banks-->
+  <div class="center" id="mapCanvas">
+    <!--<h1>Map View</h1>-->
+
+
+    <!--filter-->
+    <form th:method="post" th:action="@{/home/filter}">
+      <div id="dropdownBankChoice">
+        <h4 id="labelBanks">Одберете ја посакуваната банка:</h4>
+        <label for="banks"></label>
+        <select name="bankChoice" id="banks">
+          <option value="Komercijalna banka">Komercijalna</option>
+          <option value="Halkbank">Halkbank</option>
+          <option value="Sparkasse">Sparkasse</option>
+          <option value="Nlb banka">NLB</option>
+          <option value="Stopanska banka">Stopanska</option>
+          <option value="Ttk banka">TTK</option>
+          <option value="Unibank">Unibank</option>
+          <option value="Procredit banka">Procredit</option>
+          <option value="Silkroad banka">Silkroad</option>
+        </select>
+      </div>
+
+      <div id="buttonChoices">
+        <h4>Селектирајте ги посакуваните опции:</h4>
+        <div id="checkBoxButtons">
+
+                    <span class="checkBoxButtonName">Сите
+                        <input type="radio" name="type" value="All" id="all">
+                         <span class="checkmark"></span>
+                    </span>
+
+          <span class="checkBoxButtonName">Филијали
+                        <input type="radio" name="type" value="Bank" id="bank">
+                        <span class="checkmark"></span>
+                    </span>
+
+          <span class="checkBoxButtonName">ATM
+                        <input type="radio" name="type" value="ATM" id="atm">
+                        <span class="checkmark"></span>
+                    </span>
+
+        </div>
+      </div>
+      <input type="submit" th:value="Filter" class="filter-btn"/>
+    </form>
+    <!--filter-->
+
+
+    <!--search-->
+
+    <!--search-->
+
+
+    <!--<ul th:if="${places} != null">
+        <li th:each="place : ${places}">
+            <div th:value="${place.getName()}"></div>
+            <div th:value="${place.getType()}"></div>
+            <div th:value="${place.getLatitude()}"></div>
+            <div th:value="${place.getLongitude()}"></div>
+        </li>
+    </ul>-->
+
+
+    <div id="map"></div>
+
+  </div>
+
+</div>
+
+
+<!--footer-->
+<div class="footer">
+  <p>&copy; 2022 | Made by <span>team Xmen</span></p>
+</div>
+<!--footer-->
+
+</body>
+
+<script>
+  let L = window.L;
+
+  let map = L.map('map', {
+    center: [42.0020, 21.4032],
+    zoom: 14,
+    gestureHandling: true
+  });
+
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+  }).addTo(map);
+
+
+  function val() {
+    return document.getElementById("banks").value;
+  }
+
+  let bankArr = [];
+  getData();
+
+  async function getData() {
+    const response = await fetch('src/main/java/mk/ukim/finki/dians/proekt/repository/data.csv');
+    const data = await response.text();
+    const table = data.split('\n').splice(1);
+
+    for (let i = 0; i < bankArr.length; i++) {
+      map.removeLayer(bankArr[i])
+    }
+    bankArr = []
+
+    table.forEach(row => {
+      const columns = row.split(',');
+      const nameBanks = columns[2].split(" ")[0];
+      const latitude = columns[3];
+      const latitudeCord = parseFloat(latitude);
+      const longitude = columns[4];
+      const longitudeCord = parseFloat(longitude);
+
+      if (nameBanks.toLowerCase() === val()) {
+        let marker = L.marker([latitudeCord, longitudeCord]);
+        map.addLayer(marker);
+        marker.bindPopup(nameBanks);
+        bankArr.push(marker);
+      }
+    })
+  }
+</script>
+
+</html>
