@@ -14,9 +14,11 @@ public interface AmenityService {
 
     List<Amenity> findByType(String type);
 
-    List<Amenity> findByName(String name);
+    /*List<Amenity> findByName(String name);*/
+    Optional<Amenity> findByName(String name);
 
-    List<Amenity> findByNameAndType(String name, String type);
+    /*List<Amenity> findByNameAndType(String name, String type);*/
+    Optional<Amenity> findByNameAndType(String name, String type);
 
     List<Amenity> search(String text);
 }

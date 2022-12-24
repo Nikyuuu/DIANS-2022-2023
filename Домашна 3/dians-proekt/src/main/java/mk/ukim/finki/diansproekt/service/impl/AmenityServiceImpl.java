@@ -36,13 +36,21 @@ public class AmenityServiceImpl implements AmenityService {
         return this.amenityRepository.findByType(type);
     }
 
-    @Override
+   /* @Override
     public List<Amenity> findByName(String name) {
+        return this.amenityRepository.findByName(name);
+    } */
+    @Override
+    public Optional<Amenity> findByName(String name) {
         return this.amenityRepository.findByName(name);
     }
 
-    @Override
+    /*@Override
     public List<Amenity> findByNameAndType(String name, String type) {
+        return this.amenityRepository.findByNameAndType(name, type);
+    }*/
+    @Override
+    public Optional<Amenity> findByNameAndType(String name, String type) {
         return this.amenityRepository.findByNameAndType(name, type);
     }
 

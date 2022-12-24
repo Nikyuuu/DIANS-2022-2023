@@ -61,26 +61,28 @@ public class AmenityRepository {
 
 
     public Optional<Amenity> findById(String id) {
-        return list.stream().filter(r -> r.getId().equals(id)).findFirst();
+        return list.stream().filter(r -> r.getId().trim().equals(id)).findFirst();
     }
 
     public List<Amenity> findByType(String type) {
-        return list.stream().filter(r -> r.getType().equalsIgnoreCase(type)).collect(Collectors.toList());
+        return list.stream().filter(r -> r.getType().trim().equalsIgnoreCase(type)).collect(Collectors.toList());
     }
 
-    public List<Amenity> findByName(String name) {
-        return list.stream().filter(r -> r.getName().equalsIgnoreCase(name)).collect(Collectors.toList());
+    /*public List<Amenity> findByName(String name) {
+        return list.stream().filter(r -> r.getName().trim().equals(name)).collect(Collectors.toList());
+    }*/
+    public Optional<Amenity> findByName(String name) {
+        return list.stream().filter(r -> r.getName().trim().equals(name)).findFirst();
     }
 
-    public List<Amenity> findByNameAndType(String name, String type) {
-        List<Amenity> temp = list.stream().filter(r -> r.getName().equalsIgnoreCase(name) && r.getType().equalsIgnoreCase(type)).collect(Collectors.toList());
-        for (int i = 0; i < temp.size(); i++) {
-            System.out.println(temp.get(i));
-        }
-        return temp;
-    }
+   /* public List<Amenity> findByNameAndType(String name, String type) {
+        return list.stream().filter(r -> r.getName().trim().equals(name) && r.getType().trim().equals(type)).collect(Collectors.toList());
+    }*/
+   public Optional<Amenity> findByNameAndType(String name, String type) {
+       return list.stream().filter(r -> r.getName().trim().equals(name) && r.getType().trim().equals(type)).findFirst();
+   }
 
     public List<Amenity> search(String text) {
-        return list.stream().filter(r -> r.getName().equalsIgnoreCase(text)).collect(Collectors.toList());
+        return list.stream().filter(r -> r.getName().trim().equalsIgnoreCase(text)).collect(Collectors.toList());
     }
 }

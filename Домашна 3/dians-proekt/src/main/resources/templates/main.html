@@ -276,7 +276,7 @@
 
 
     <!--filter-->
-    <form th:method="post" th:action="@{/home/filter}">
+    <form th:method="get" th:action="@{/home}">
       <div id="dropdownBankChoice">
         <h4 id="labelBanks">Одберете ја посакуваната банка:</h4>
         <label for="banks"></label>
@@ -303,7 +303,7 @@
                     </span>
 
           <span class="checkBoxButtonName">Филијали
-                        <input type="radio" name="type" value="Bank" id="bank">
+                        <input type="radio" name="type" value="Bank" id="bank" checked>
                         <span class="checkmark"></span>
                     </span>
 
@@ -322,24 +322,30 @@
     <!--search-->
 
     <!--search-->
+   <!-- <div th:if="${bankName} != null">
+      <h3 th:value="${bankName}"></h3>
+      <span th:value="${lat}"></span>
+      <span th:value="${lon}"></span>
+    </div>-->
 
-
-    <!--<ul th:if="${places} != null">
-        <li th:each="place : ${places}">
-            <div th:value="${place.getName()}"></div>
-            <div th:value="${place.getType()}"></div>
-            <div th:value="${place.getLatitude()}"></div>
-            <div th:value="${place.getLongitude()}"></div>
+   <!--<<ul th:if="${chosen} != null">
+        <li>
+          <th:block th:text="${chosen.name}"/>
+          (<th:block th:text="${chosen.type}"/>)
         </li>
-    </ul>-->
+    </ul>- -->
 
+    <div th:if="${bank} != null">
+      <input type="hidden" th:value="${bank.getLongitude()}" id="lon">
+      <input type="hidden" th:value="${bank.getLatitude()}" id="lat">
+      <input type="hidden" th:value="${bank.getName()}" id="bankName">
 
-    <div id="map"></div>
+    </div>
+    <div id="map"> </div>
+
 
   </div>
-
 </div>
-
 
 <!--footer-->
 <div class="footer">
@@ -349,7 +355,8 @@
 
 </body>
 
-<script>
+<script th:inline="javascript">
+
   let L = window.L;
 
   let map = L.map('map', {
@@ -362,16 +369,54 @@
     maxZoom: 19,
   }).addTo(map);
 
+  var lat = document.getElementById("lat").value;
+  var lon = document.getElementById("lon").value;
+  var bankName = document.getElementById("bankName").value;
 
-  function val() {
+  if(lat != null && lon != null){
+
+    console.log(bankName);
+    console.log(lat);
+    console.log(lon);
+
+    let marker = new L.Marker([lat, lon]);
+    marker.addTo(map);
+    marker.bindPopup(bankName);
+  }
+
+
+  /*primer marker*/
+  /*let marker = new L.marker([42.0075172, 21.3683899]);
+  marker.addTo(map);
+  marker.bindPopup("Komercijalna banka");*/
+  /*primer marker*/
+
+  /*
+    let marker = new L.marker([41.9947725, 21.4100251]);
+    marker.addTo(map);
+    marker.bindPopup("Komercijalna banka");
+
+    let marker = new L.marker([42.0028422, 21.4011278]);
+    marker.addTo(map);
+    marker.bindPopup("Komercijalna banka");
+
+    let marker = new L.marker([42.0046642, 21.3909854]);
+    marker.addTo(map);
+    marker.bindPopup("Komercijalna banka");
+    */
+
+
+  /*function val() {
+    console.log(document.getElementById("banks").value);
     return document.getElementById("banks").value;
   }
+
 
   let bankArr = [];
   getData();
 
   async function getData() {
-    const response = await fetch('src/main/java/mk/ukim/finki/dians/proekt/repository/data.csv');
+    const response = await fetch('data.csv');
     const data = await response.text();
     const table = data.split('\n').splice(1);
 
@@ -382,6 +427,7 @@
 
     table.forEach(row => {
       const columns = row.split(',');
+      const type = columns[0];
       const nameBanks = columns[2].split(" ")[0];
       const latitude = columns[3];
       const latitudeCord = parseFloat(latitude);
@@ -395,7 +441,8 @@
         bankArr.push(marker);
       }
     })
-  }
+  }*/
+
 </script>
 
 </html>
