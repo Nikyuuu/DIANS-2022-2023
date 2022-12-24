@@ -1,355 +1,312 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+            crossorigin=""></script>
+    <link rel="stylesheet" href="//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css"
+          type="text/css">
+    <script src="//unpkg.com/leaflet-gesture-handling"></script>
+    <title>Home page</title>
+    <style>
+        /* whole body */
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            background: #18485B;
+            scroll-behavior: smooth;
+        }
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-        integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-        crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-          integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-          crossorigin=""></script>
+        #wholeWrapper {
+            width: 80%;
+            background-color: #18485B;
+            margin-left: auto;
+            margin-right: auto;
+            height: auto;
+        }
 
-  <link rel="stylesheet" href="//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css"
-        type="text/css">
-  <script src="//unpkg.com/leaflet-gesture-handling"></script>
+        .center {
+            text-align: center;
+        }
 
+        /* NAVBAR */
+        .navbarDiv {
+            display: block;
+        }
 
-  <title>Home page</title>
-  <style>
-    /* whole body */
-    body {
-      margin: 0;
-      width: 100%;
-      height: 100%;
-      font-family: Arial, sans-serif;
-      overflow-x: hidden;
-      background: #18485B;
-      scroll-behavior: smooth;
-    }
+        .mainNavbar {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            width: auto;
+        }
 
-    #wholeWrapper {
-      width: 80%;
-      background-color: #18485B;
-      margin-left: auto;
-      margin-right: auto;
-      height: auto;
-    }
+        .navbarDiv li {
+            float: right;
+        }
 
-    .center {
-      text-align: center;
-    }
+        .navbarDiv li a {
+            display: block;
+            color: whitesmoke;
+            text-align: center;
+            padding: 14px 30px;
+            text-decoration: none;
+        }
 
-    /* NAVBAR */
-    .navbarDiv {
-      display: block;
-    }
+        .mainNavbar > li:nth-child(1) {
+            margin-right: 200px;
+        }
 
-    .mainNavbar {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      width: auto;
-    }
+        .navbarDiv ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
 
-    .navbarDiv li {
-      float: right;
-    }
+        .active {
+            background-color: #1BB05D;
+        }
 
-    .navbarDiv li a {
-      display: block;
-      color: whitesmoke;
-      text-align: center;
-      padding: 14px 30px;
-      text-decoration: none;
-    }
+        /* Banks List */
+        #banks div:hover, .same-as-selected {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
 
-    .mainNavbar > li:nth-child(1) {
-      margin-right: 200px;
-    }
+        #listBanks a {
+            padding-right: 20px;
+        }
 
-    .navbarDiv ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background-color: #333;
-    }
+        #listBanks a img {
+            width: 100px;
+            height: 100px;
+            margin-top: 20px;
+            border: 2px solid #1BB05D;
+            border-radius: 5px;
+        }
 
-    .active {
-      background-color: #1BB05D;
-    }
+        #listBanks h1 {
+            color: whitesmoke;
+        }
 
-    /* Banks List */
-    #banks div:hover, .same-as-selected {
-      background-color: rgba(0, 0, 0, 0.1);
-    }
+        /* map */
+        #mapCanvas {
+            margin-top: 100px;
+        }
 
-    #listBanks a {
-      padding-right: 20px;
-    }
+        #mapCanvas h1 {
+            color: whitesmoke;
+        }
 
-    #listBanks a img {
-      width: 100px;
-      height: 100px;
-      margin-top: 20px;
-      border: 2px solid #1BB05D;
-      border-radius: 5px;
-    }
+        /* map checkBoxButtons */
+        #buttonChoices {
+            float: right;
+            background-color: #333;
+            border-radius: 15px;
+            height: 80px;
+            width: 350px;
+            margin-right: 200px;
+            text-align: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
 
-    #listBanks h1 {
-      color: whitesmoke;
-    }
+        #buttonChoices h4 {
+            color: whitesmoke;
+        }
 
-    /* map */
-    #mapCanvas {
-      margin-top: 100px;
-    }
+        #checkBoxButtons {
+            width: auto;
+            margin-top: -15px;
+            padding: 4px 10px 5px 20px;
+        }
 
-    #mapCanvas h1 {
-      color: whitesmoke;
-    }
+        #checkBoxButtons > span:nth-child(1) {
+            margin-right: 10px;
+        }
 
-    /* map checkBoxButtons */
-    #buttonChoices {
-      float: right;
-      background-color: #333;
-      border-radius: 15px;
-      height: 80px;
-      width: 400px;
-      margin-right: 200px;
-      text-align: center;
-      justify-content: center;
-      margin-bottom: 30px;
-    }
+        #checkBoxButtons > span:nth-child(2) {
+            margin-right: 10px;
+        }
 
-    #buttonChoices h4 {
-      color: whitesmoke;
-    }
+        .checkBoxButtonName {
+            border-radius: 12px;
+            padding-left: 10px;
+        }
 
-    #checkBoxButtons {
-      width: auto;
-      margin-top: -15px;
-      padding: 4px 10px 5px 20px;
-    }
+        #buttonChoices .checkBoxButtonName {
+            color: whitesmoke;
+            background-color: #737B80;
+            padding: 5px 20px 5px 20px;
+        }
 
-    #checkBoxButtons > span:nth-child(1) {
-      margin-right: 10px;
-    }
+        /*map dropdownList */
+        #dropdownBankChoice {
+            float: left;
+            background-color: #333;
+            border-radius: 15px;
+            height: 80px;
+            width: 350px;
+            margin-left: 200px;
+        }
 
-    #checkBoxButtons > span:nth-child(2) {
-      margin-right: 10px;
-    }
+        #labelBanks {
+            color: whitesmoke;
+        }
 
-    .checkBoxButtonName {
-      border-radius: 12px;
-      padding-left: 10px;
-    }
+        #banks {
+            position: absolute;
+            padding: 4px 10px 5px 20px;
+            margin-top: -15px;
+            margin-left: -64px;
+            margin-right: auto;
+            color: whitesmoke;
+            background-color: #737B80;
+            border-radius: 12px;
+        }
 
-    #buttonChoices .checkBoxButtonName {
-      color: whitesmoke;
-      background-color: #737B80;
-      padding: 5px 20px 5px 20px;
-    }
-    .filter-btn{
-      float: right;
-      border-radius: 12px;
-      color: whitesmoke;
-      background-color: #737B80;
-      text-align: center;
-      justify-content: center;
-      height: 25px;
-      width: 75px;
-      cursor: pointer;
-      margin-top: 30px;
-      margin-bottom: 30px;
-    }
+        /* map */
+        #map {
+            width: 80%;
+            height: 600px;
+            margin: auto;
+            border-radius: 10px;
+        }
 
+        /* footer */
+        .footer {
+            background-color: #333;
+            height: 50px;
+            background-size: cover;
+            width: 100%;
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: 50px;
+        }
 
-    .filter-btn {
-      float: right;
-      border-radius: 12px;
-      color: whitesmoke;
-      background-color: #737B80;
-      text-align: center;
-      justify-content: center;
-      height: 25px;
-      width: 75px;
-      cursor: pointer;
-      margin-top: 30px;
-      margin-bottom: 30px;
-    }
-
-
-    /*map dropdownList */
-    #dropdownBankChoice {
-      float: left;
-      background-color: #333;
-      border-radius: 15px;
-      height: 80px;
-      width: 400px;
-      margin-left: 200px;
-    }
-
-    #labelBanks {
-      color: whitesmoke;
-    }
-
-    #banks {
-      position: absolute;
-      padding: 4px 10px 5px 20px;
-      margin-top: -15px;
-      margin-left: -64px;
-      margin-right: auto;
-      color: whitesmoke;
-      background-color: #737B80;
-      border-radius: 12px;
-    }
-
-    /* map */
-    #map {
-      width: 80%;
-      height: 600px;
-      margin: auto;
-      border-radius: 10px;
-    }
-
-    /* footer */
-    .footer {
-      background-color: #333;
-      height: 50px;
-      background-size: cover;
-      width: 100%;
-      margin-right: auto;
-      margin-left: auto;
-      margin-top: 50px;
-    }
-
-    .footer p {
-      color: whitesmoke;
-      text-align: center;
-      padding-top: 20px;
-      margin-top: 0;
-    }
-  </style>
+        .footer p {
+            color: whitesmoke;
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 0;
+        }
+    </style>
 
 </head>
 <body>
 
 <!--navbar-->
 <div class="navbarDiv">
-  <ul class="mainNavbar">
-    <li><a class="active" href="/home">Home</a></li>
-    <li><a href="/about">About</a></li>
-  </ul>
+    <ul class="mainNavbar">
+        <li><a class="active" href="/home">Home</a></li>
+        <li><a href="/about">About</a></li>
+    </ul>
 </div>
 <!--navbar-->
 
-<div class="center" id="wholeWrapper">
+<div class="center" id="wholeWrapper" style="margin-top: 20px">
 
+    <!--list banks-->
+    <div class="center" id="listBanks">
+        <a href="https://halkbank.mk/" target="_blank"><img th:src="@{/halkbank.jpg}" style="width: 100px" height=""
+                                                            alt="halkbank picture"></a>
+        <a href="https://www.kb.com.mk/" target="_blank"><img th:src="@{/komercijalna.jpg}" style="width: 100px"
+                                                              alt="komercijalna picture"></a>
+        <a href="https://sparkasse.mk/" target="_blank"><img th:src="@{/sparkasse.jpg}" style="width: 100px"
+                                                             alt="sparkasse picture"></a>
+        <a href="https://nlb.mk/" target="_blank"><img th:src="@{/nlb.jpg}" style="width: 100px" alt="nlb picture"></a>
+        <a href="https://www.stb.com.mk/" target="_blank"><img th:src="@{/stopanska.jpg}" style="width: 100px"
+                                                               alt="stopanska picture"></a>
+        <a href="https://www.ttk.com.mk/" target="_blank"><img th:src="@{/ttk.jpg}" style="width: 100px"
+                                                               alt="ttk picture"></a>
+        <a href="https://www.unibank.mk/" target="_blank"><img th:src="@{/uni.jpg}" style="width: 100px"
+                                                               alt="unibank picture"></a>
+        <a href="https://silkroadbank.com.mk/" target="_blank"><img th:src="@{silkroad.jpg}" style="width: 100px"
+                                                                    alt="silkroad picture"></a>
+        <a href="https://www.pcb.mk/private_clients.nspx" target="_blank"><img th:src="@{/procredit.jpg}"
+                                                                               style="width: 100px"
+                                                                               alt="procredit picture"></a>
+    </div>
+    <!--list banks-->
 
-  <!--list banks-->
-  <div class="center" id="listBanks">
-    <h1>Lists of Banks</h1>
-    <a href="https://halkbank.mk/" target="_blank"><img th:src="@{/halkbank.jpg}" style="width: 100px" height=""
-                                                        alt="halkbank picture"></a>
-    <a href="https://www.kb.com.mk/" target="_blank"><img th:src="@{/komercijalna.jpg}" style="width: 100px"
-                                                          alt="komercijalna picture"></a>
-    <a href="https://sparkasse.mk/" target="_blank"><img th:src="@{/sparkasse.jpg}" style="width: 100px"
-                                                         alt="sparkasse picture"></a>
-    <a href="https://nlb.mk/" target="_blank"><img th:src="@{/nlb.jpg}" style="width: 100px" alt="nlb picture"></a>
-    <a href="https://www.stb.com.mk/" target="_blank"><img th:src="@{/stopanska.jpg}" style="width: 100px"
-                                                           alt="stopanska picture"></a>
-    <a href="https://www.ttk.com.mk/" target="_blank"><img th:src="@{/ttk.jpg}" style="width: 100px"
-                                                           alt="ttk picture"></a>
-    <a href="https://www.unibank.mk/" target="_blank"><img th:src="@{/uni.jpg}" style="width: 100px"
-                                                           alt="unibank picture"></a>
-    <a href="https://silkroadbank.com.mk/" target="_blank"><img th:src="@{silkroad.jpg}" style="width: 100px"
-                                                                alt="silkroad picture"></a>
-    <a href="https://www.pcb.mk/private_clients.nspx" target="_blank"><img th:src="@{/procredit.jpg}"
-                                                                           style="width: 100px"
-                                                                           alt="procredit picture"></a>
-  </div>
-  <!--list banks-->
-  <div class="center" id="mapCanvas">
-    <!--<h1>Map View</h1>-->
+    <div class="center" id="mapCanvas">
 
+        <!--filter-->
+        <form th:method="get" th:action="@{/home}">
+            <div id="dropdownBankChoice">
+                <h4 id="labelBanks">Одберете ја посакуваната банка:</h4>
+                <label for="banks"></label>
+                <select name="bankChoice" id="banks">
+                    <option disabled selected value> -- изберете опција -- </option>
+                    <option value="Komercijalna banka">Комерцијална банка</option>
+                    <option value="Sparkasse">Sparkasse банка</option>
+                    <option value="Halkbank">Halk банка</option>
+                    <option value="Nlb banka">NLB банка</option>
+                    <option value="Stopanska banka">Стопанска банка</option>
+                    <option value="Ttk banka">TTK банка</option>
+                    <option value="Unibank">УНИ банка</option>
+                    <option value="Procredit banka">Procredit банка</option>
+                    <option value="Silkroad banka">Silkroad банка</option>
+                </select>
+            </div>
 
-    <!--filter-->
-    <form th:method="get" th:action="@{/home}">
-      <div id="dropdownBankChoice">
-        <h4 id="labelBanks">Одберете ја посакуваната банка:</h4>
-        <label for="banks"></label>
-        <select name="bankChoice" id="banks">
-          <option value="Komercijalna banka">Komercijalna</option>
-          <option value="Halkbank">Halkbank</option>
-          <option value="Sparkasse">Sparkasse</option>
-          <option value="Nlb banka">NLB</option>
-          <option value="Stopanska banka">Stopanska</option>
-          <option value="Ttk banka">TTK</option>
-          <option value="Unibank">Unibank</option>
-          <option value="Procredit banka">Procredit</option>
-          <option value="Silkroad banka">Silkroad</option>
-        </select>
-      </div>
-
-      <div id="buttonChoices">
-        <h4>Селектирајте ги посакуваните опции:</h4>
-        <div id="checkBoxButtons">
-
-                    <span class="checkBoxButtonName">Сите
-                        <input type="radio" name="type" value="All" id="all">
-                         <span class="checkmark"></span>
-                    </span>
-
-          <span class="checkBoxButtonName">Филијали
-                        <input type="radio" name="type" value="Bank" id="bank" checked>
+            <div id="buttonChoices">
+                <h4>Селектирајте ја посакуваната опција:</h4>
+                <div id="checkBoxButtons">
+                    <span class="checkBoxButtonName">Филијалa
+                        <input type="radio" name="type" value="Bank" id="bank">
                         <span class="checkmark"></span>
                     </span>
-
-          <span class="checkBoxButtonName">ATM
+                    <span class="checkBoxButtonName">ATM
                         <input type="radio" name="type" value="ATM" id="atm">
                         <span class="checkmark"></span>
                     </span>
+                </div>
+            </div>
+            <input type="submit" th:value="Филтрирај" class="filter-btn"/>
+            <!--todo: style .filter-btn-->
+        </form>
+        <!--filter-->
 
+
+        <!--search-->
+        <form th:method="get" th:action="@{/home}">
+            <input type="text" placeholder="Search..." name="search">
+            <input type="submit" th:value="Пребарај" class="search-btn">
+            <!--todo: style .search-btn-->
+        </form>
+        <!--search-->
+
+        <!--error message-->
+        <div th:if="${hasError}" class="error-msg">
+            <h5 th:text="${error}" style="color: #bbbbbb"></h5>
+            <!--todo: style .error-msg-->
         </div>
-      </div>
-      <input type="submit" th:value="Filter" class="filter-btn"/>
-    </form>
-    <!--filter-->
+        <!--error message-->
 
-
-    <!--search-->
-
-    <!--search-->
-   <!-- <div th:if="${bankName} != null">
-      <h3 th:value="${bankName}"></h3>
-      <span th:value="${lat}"></span>
-      <span th:value="${lon}"></span>
-    </div>-->
-
-   <!--<<ul th:if="${chosen} != null">
-        <li>
-          <th:block th:text="${chosen.name}"/>
-          (<th:block th:text="${chosen.type}"/>)
-        </li>
-    </ul>- -->
-
-    <div th:if="${bank} != null">
-      <input type="hidden" th:value="${bank.getLongitude()}" id="lon">
-      <input type="hidden" th:value="${bank.getLatitude()}" id="lat">
-      <input type="hidden" th:value="${bank.getName()}" id="bankName">
+        <!--map-->
+        <div th:if="${bank} != null">
+            <input type="hidden" th:value="${bank.getLongitude()}" id="lon">
+            <input type="hidden" th:value="${bank.getLatitude()}" id="lat">
+            <input type="hidden" th:value="${bank.getName()}" id="bankName">
+        </div>
+        <div id="map"></div>
+        <!--map-->
 
     </div>
-    <div id="map"> </div>
-
-
-  </div>
 </div>
 
 <!--footer-->
 <div class="footer">
-  <p>&copy; 2022 | Made by <span>team Xmen</span></p>
+    <p>&copy; 2022 | Made by <span>team Xmen</span></p>
 </div>
 <!--footer-->
 
@@ -357,92 +314,29 @@
 
 <script th:inline="javascript">
 
-  let L = window.L;
+    let L = window.L;
 
-  let map = L.map('map', {
-    center: [42.0020, 21.4032],
-    zoom: 14,
-    gestureHandling: true
-  });
+    let map = L.map('map', {
+        center: [42.0020, 21.4032],
+        zoom: 14,
+        gestureHandling: true
+    });
 
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-  }).addTo(map);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    }).addTo(map);
 
-  var lat = document.getElementById("lat").value;
-  var lon = document.getElementById("lon").value;
-  var bankName = document.getElementById("bankName").value;
+    let lat = document.getElementById("lat").value;
+    let lon = document.getElementById("lon").value;
+    let bankName = document.getElementById("bankName").value;
 
-  if(lat != null && lon != null){
-
-    console.log(bankName);
-    console.log(lat);
-    console.log(lon);
-
-    let marker = new L.Marker([lat, lon]);
-    marker.addTo(map);
-    marker.bindPopup(bankName);
-  }
-
-
-  /*primer marker*/
-  /*let marker = new L.marker([42.0075172, 21.3683899]);
-  marker.addTo(map);
-  marker.bindPopup("Komercijalna banka");*/
-  /*primer marker*/
-
-  /*
-    let marker = new L.marker([41.9947725, 21.4100251]);
-    marker.addTo(map);
-    marker.bindPopup("Komercijalna banka");
-
-    let marker = new L.marker([42.0028422, 21.4011278]);
-    marker.addTo(map);
-    marker.bindPopup("Komercijalna banka");
-
-    let marker = new L.marker([42.0046642, 21.3909854]);
-    marker.addTo(map);
-    marker.bindPopup("Komercijalna banka");
-    */
-
-
-  /*function val() {
-    console.log(document.getElementById("banks").value);
-    return document.getElementById("banks").value;
-  }
-
-
-  let bankArr = [];
-  getData();
-
-  async function getData() {
-    const response = await fetch('data.csv');
-    const data = await response.text();
-    const table = data.split('\n').splice(1);
-
-    for (let i = 0; i < bankArr.length; i++) {
-      map.removeLayer(bankArr[i])
+    if (lat != null && lon != null) {
+        console.log(bankName);
+        console.log(lat);
+        console.log(lon);
+        let marker = new L.Marker([lat, lon]);
+        marker.addTo(map);
+        marker.bindPopup(bankName);
     }
-    bankArr = []
-
-    table.forEach(row => {
-      const columns = row.split(',');
-      const type = columns[0];
-      const nameBanks = columns[2].split(" ")[0];
-      const latitude = columns[3];
-      const latitudeCord = parseFloat(latitude);
-      const longitude = columns[4];
-      const longitudeCord = parseFloat(longitude);
-
-      if (nameBanks.toLowerCase() === val()) {
-        let marker = L.marker([latitudeCord, longitudeCord]);
-        map.addLayer(marker);
-        marker.bindPopup(nameBanks);
-        bankArr.push(marker);
-      }
-    })
-  }*/
-
 </script>
-
 </html>

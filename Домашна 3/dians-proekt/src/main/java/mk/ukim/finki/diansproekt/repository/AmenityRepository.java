@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 @Repository
@@ -20,7 +19,6 @@ public class AmenityRepository {
         BufferedReader reader = new BufferedReader(new FileReader("src/main/java/mk/ukim/finki/diansproekt/repository/data.csv"));
         String row = "";
         int flag = 0;
-        Random random = new Random();
 
         while ((row = reader.readLine()) != null) {
             String[] data = row.split(",");
@@ -44,21 +42,6 @@ public class AmenityRepository {
         return list;
     }
 
-    public List<Amenity> listAllBanks() {
-        List<Amenity> temp = findByType("Bank");
-        System.out.println(temp);
-        List<Amenity> banks = new ArrayList<>();
-        int j = 0;
-        for (int i = 0; i < temp.size() - 1; i++) {
-            if (!temp.get(i).getName().equals(temp.get(i + 1).getName())) {
-                banks.set(j++, temp.get(i));
-            }
-            banks.set(j++, temp.get(temp.size() - 1));
-        }
-        System.out.println(banks);
-        return banks;
-    }
-
 
     public Optional<Amenity> findById(String id) {
         return list.stream().filter(r -> r.getId().trim().equals(id)).findFirst();
@@ -75,14 +58,19 @@ public class AmenityRepository {
         return list.stream().filter(r -> r.getName().trim().equals(name)).findFirst();
     }
 
-   /* public List<Amenity> findByNameAndType(String name, String type) {
-        return list.stream().filter(r -> r.getName().trim().equals(name) && r.getType().trim().equals(type)).collect(Collectors.toList());
-    }*/
-   public Optional<Amenity> findByNameAndType(String name, String type) {
-       return list.stream().filter(r -> r.getName().trim().equals(name) && r.getType().trim().equals(type)).findFirst();
-   }
+    /* public List<Amenity> findByNameAndType(String name, String type) {
+         return list.stream().filter(r -> r.getName().trim().equals(name) && r.getType().trim().equals(type)).collect(Collectors.toList());
+     }*/
 
-    public List<Amenity> search(String text) {
+    public Optional<Amenity> findByNameAndType(String name, String type) {
+        return list.stream().filter(r -> r.getName().trim().equals(name) && r.getType().trim().equals(type)).findFirst();
+    }
+
+    /*public List<Amenity> search(String text) {
         return list.stream().filter(r -> r.getName().trim().equalsIgnoreCase(text)).collect(Collectors.toList());
+    }*/
+
+    public Optional<Amenity> search(String text) {
+        return list.stream().filter(r -> r.getName().trim().toLowerCase().contains(text.toLowerCase())).findFirst();
     }
 }

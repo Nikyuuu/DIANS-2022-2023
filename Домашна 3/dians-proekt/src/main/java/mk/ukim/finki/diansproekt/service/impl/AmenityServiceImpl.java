@@ -22,11 +22,6 @@ public class AmenityServiceImpl implements AmenityService {
     }
 
     @Override
-    public List<Amenity> listAllBanks() {
-        return this.amenityRepository.listAllBanks();
-    }
-
-    @Override
     public Optional<Amenity> findById(String id) {
         return this.amenityRepository.findById(id);
     }
@@ -36,10 +31,11 @@ public class AmenityServiceImpl implements AmenityService {
         return this.amenityRepository.findByType(type);
     }
 
-   /* @Override
-    public List<Amenity> findByName(String name) {
-        return this.amenityRepository.findByName(name);
-    } */
+    /* @Override
+     public List<Amenity> findByName(String name) {
+         return this.amenityRepository.findByName(name);
+     } */
+
     @Override
     public Optional<Amenity> findByName(String name) {
         return this.amenityRepository.findByName(name);
@@ -49,13 +45,19 @@ public class AmenityServiceImpl implements AmenityService {
     public List<Amenity> findByNameAndType(String name, String type) {
         return this.amenityRepository.findByNameAndType(name, type);
     }*/
+
     @Override
     public Optional<Amenity> findByNameAndType(String name, String type) {
         return this.amenityRepository.findByNameAndType(name, type);
     }
 
-    @Override
+   /* @Override
     public List<Amenity> search(String text) {
+        return this.amenityRepository.search(text);
+    }*/
+
+    @Override
+    public Optional<Amenity> search(String text) {
         return this.amenityRepository.search(text);
     }
 }

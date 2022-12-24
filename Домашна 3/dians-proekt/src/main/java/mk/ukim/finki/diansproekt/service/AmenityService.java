@@ -8,8 +8,6 @@ import java.util.Optional;
 public interface AmenityService {
     List<Amenity> listAll();
 
-    List<Amenity> listAllBanks();
-
     Optional<Amenity> findById(String id);
 
     List<Amenity> findByType(String type);
@@ -20,5 +18,5 @@ public interface AmenityService {
     /*List<Amenity> findByNameAndType(String name, String type);*/
     Optional<Amenity> findByNameAndType(String name, String type);
 
-    List<Amenity> search(String text);
+    Optional<Amenity> search(String text);
 }
