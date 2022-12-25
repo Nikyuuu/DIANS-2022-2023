@@ -2,6 +2,10 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
           integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
           crossorigin=""/>
@@ -180,7 +184,24 @@
             margin: auto;
             border-radius: 10px;
         }
+        .filter-btn {
+            margin-top: 120px;
+            border-radius: 8px;
+            border: 1px solid #737B80;
+            background-color: #737B80;
+            color: whitesmoke;
+            width: 100px;
+            cursor: pointer;
+        }
 
+        .search-btn {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            background-color: #18485B;
+            border: 1px solid #18485B;
+            font-size: 24px;
+            cursor: pointer;
+        }
         /* footer */
         .footer {
             background-color: #333;
@@ -279,11 +300,11 @@
 
         <!--search-->
         <form th:method="get" th:action="@{/home}">
-            <input type="text" placeholder="Search..." name="search">
-            <input type="submit" th:value="Пребарај" class="search-btn">
-            <!--todo: style .search-btn-->
+            <input type="text" placeholder="Барај..." name="search" style="border-radius: 8px">
+            <input type="submit" value="&#128269;" class="search-btn">
         </form>
         <!--search-->
+
 
         <!--error message-->
         <div th:if="${hasError}" class="error-msg">
@@ -322,9 +343,23 @@
         gestureHandling: true
     });
 
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    let layer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-    }).addTo(map);
+    });
+    map.addLayer(layer);
+
+
+    navigator.geolocation.getCurrentPosition(function (position) {
+        userLat = position.coords.latitude;
+        userLon = position.coords.longitude;
+        console.log(position);
+        console.log(position.coords.latitude)
+        console.log(position.coords.longitude)
+        let userMarker = L.marker([position.coords.latitude,position.coords.longitude]).bindPopup("Your location");
+        map.addLayer(userMarker);
+    })
+
+
 
     let lat = document.getElementById("lat").value;
     let lon = document.getElementById("lon").value;
@@ -334,9 +369,16 @@
         console.log(bankName);
         console.log(lat);
         console.log(lon);
-        let marker = new L.Marker([lat, lon]);
-        marker.addTo(map);
-        marker.bindPopup(bankName);
+        let marker = new L.Marker([lat, lon]).bindPopup(bankName);
+        map.addLayer(marker);
+
+        L.Routing.control({
+            waypoints: [
+                L.latLng([userLat, userLon]),
+                L.latLng([lat, lon])
+            ]
+        }).addTo(map);
+
     }
 </script>
 </html>

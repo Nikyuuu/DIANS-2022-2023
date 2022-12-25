@@ -22,18 +22,6 @@ public class HomeController {
                             @RequestParam(required = false) String search,
                             Model model) {
         if (bankChoice != null && !bankChoice.equals("") && type != null && !type.equals("")) {
-           /* if (type.equals("All")) {
-                model.addAttribute("chosen", this.amenityService.findByName(bankChoice));
-                model.addAttribute("bank", this.amenityService.findByName(bankChoice).get());
-                model.addAttribute("bankName", this.amenityService.findByName(bankChoice).get().getName());
-                model.addAttribute("lat", this.amenityService.findByName(bankChoice).get().getLatitude());
-                model.addAttribute("lon", this.amenityService.findByName(bankChoice).get().getLongitude());
-
-                System.out.println("From database - name: " + this.amenityService.findByName(bankChoice).get().getName());
-                System.out.println("From database - latitude: " + this.amenityService.findByName(bankChoice).get().getLatitude());
-                System.out.println("From database - longitude: " + this.amenityService.findByName(bankChoice).get().getLongitude());
-            } else {*/
-            model.addAttribute("chosen", this.amenityService.findByNameAndType(bankChoice, type));
             if (this.amenityService.findByNameAndType(bankChoice, type).isPresent()) {
                 model.addAttribute("bank", this.amenityService.findByNameAndType(bankChoice, type).get());
                 model.addAttribute("bankName", this.amenityService.findByNameAndType(bankChoice, type).get().getName());
