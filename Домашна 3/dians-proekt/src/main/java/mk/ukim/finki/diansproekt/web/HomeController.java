@@ -55,7 +55,7 @@ public class HomeController {
             }
             else {
                 model.addAttribute("hasError", true);
-                model.addAttribute("error", "Не постои банкомат од избраната банка во општина Карпош");
+                model.addAttribute("error", "Не постои банкомат од избраната банка во општина Карпош!");
             }
         }
         return "main";

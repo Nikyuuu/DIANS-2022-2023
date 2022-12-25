@@ -24,16 +24,21 @@
             height: 100%;
             font-family: Arial, sans-serif;
             overflow-x: hidden;
-            background: #18485B;
+            background-image: url("/background.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
             scroll-behavior: smooth;
         }
 
         #wholeWrapper {
-            width: 80%;
-            background-color: #18485B;
+            width: 70%;
+            background-color: rgba(24, 72, 91, 0.8);
             margin-left: auto;
             margin-right: auto;
-            height: auto;
+            height: 100%;
+            padding-bottom: 50px;
+            padding-top: 50px;
         }
 
         .center {
@@ -109,18 +114,47 @@
         #mapCanvas h1 {
             color: whitesmoke;
         }
+        /*form*/
+        #formDiv{
+            display: inline-block;
+        }
+        /*map dropdownList */
+        #dropdownBankChoice {
+            float: left;
+            background-color: #333;
+            border-radius: 15px;
+            height: 100px;
+            width: 350px;
+            margin-left: 200px;
+            margin-right: 50px;
+            justify-content: center;
+        }
 
         /* map checkBoxButtons */
         #buttonChoices {
-            float: right;
+            float: left;
             background-color: #333;
             border-radius: 15px;
-            height: 80px;
+            height: 100px;
             width: 350px;
-            margin-right: 200px;
+            margin-right: 50px;
             text-align: center;
             justify-content: center;
             margin-bottom: 30px;
+        }
+
+        .filter-btn {
+            border-radius: 8px;
+            border: 2px solid #333;
+            background-color: #737B80;
+            color: whitesmoke;
+            width: 150px;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 30px;
+            margin-right: 170px;
+            font-weight: bold;
+            font-size: 16px;
         }
 
         #buttonChoices h4 {
@@ -128,9 +162,7 @@
         }
 
         #checkBoxButtons {
-            width: auto;
-            margin-top: -15px;
-            padding: 4px 10px 5px 20px;
+            /*temp*/
         }
 
         #checkBoxButtons > span:nth-child(1) {
@@ -152,29 +184,18 @@
             padding: 5px 20px 5px 20px;
         }
 
-        /*map dropdownList */
-        #dropdownBankChoice {
-            float: left;
-            background-color: #333;
-            border-radius: 15px;
-            height: 80px;
-            width: 350px;
-            margin-left: 200px;
-        }
+
 
         #labelBanks {
             color: whitesmoke;
         }
 
         #banks {
-            position: absolute;
             padding: 4px 10px 5px 20px;
-            margin-top: -15px;
-            margin-left: -64px;
-            margin-right: auto;
             color: whitesmoke;
             background-color: #737B80;
             border-radius: 12px;
+            margin-top: -5px;
         }
 
         /* map */
@@ -184,21 +205,20 @@
             margin: auto;
             border-radius: 10px;
         }
-        .filter-btn {
-            margin-top: 120px;
+        #searchBox{
+            margin-bottom: 40px;
+        }
+        #searchBar{
             border-radius: 8px;
-            border: 1px solid #737B80;
-            background-color: #737B80;
-            color: whitesmoke;
-            width: 100px;
-            cursor: pointer;
+            height: 25px;
+            width: 300px;
+            font-size: 16px;
+            border: 3px solid #333;
         }
 
         .search-btn {
-            margin-top: 20px;
-            margin-bottom: 20px;
-            background-color: #18485B;
-            border: 1px solid #18485B;
+            background-color: rgba(24, 72, 91, 0);
+            border: 0;
             font-size: 24px;
             cursor: pointer;
         }
@@ -210,7 +230,6 @@
             width: 100%;
             margin-right: auto;
             margin-left: auto;
-            margin-top: 50px;
         }
 
         .footer p {
@@ -233,7 +252,7 @@
 </div>
 <!--navbar-->
 
-<div class="center" id="wholeWrapper" style="margin-top: 20px">
+<div class="center" id="wholeWrapper">
 
     <!--list banks-->
     <div class="center" id="listBanks">
@@ -261,7 +280,7 @@
     <div class="center" id="mapCanvas">
 
         <!--filter-->
-        <form th:method="get" th:action="@{/home}">
+        <form id="formDiv" th:method="get" th:action="@{/home}">
             <div id="dropdownBankChoice">
                 <h4 id="labelBanks">Одберете ја посакуваната банка:</h4>
                 <label for="banks"></label>
@@ -293,23 +312,23 @@
                 </div>
             </div>
             <input type="submit" th:value="Филтрирај" class="filter-btn"/>
-            <!--todo: style .filter-btn-->
         </form>
         <!--filter-->
 
 
         <!--search-->
-        <form th:method="get" th:action="@{/home}">
-            <input type="text" placeholder="Барај..." name="search" style="border-radius: 8px">
-            <input type="submit" value="&#128269;" class="search-btn">
-        </form>
+        <div id="searchBox">
+            <form th:method="get" th:action="@{/home}">
+                <input type="text" placeholder="Барај..." name="search" id="searchBar">
+                <input type="submit" value="&#128269;" class="search-btn">
+            </form>
+        </div>
         <!--search-->
 
 
         <!--error message-->
-        <div th:if="${hasError}" class="error-msg">
-            <h5 th:text="${error}" style="color: #bbbbbb"></h5>
-            <!--todo: style .error-msg-->
+        <div th:if="${hasError}" id="error-msg">
+            <h5 th:text="${error}" style="color: whitesmoke; font-size: 16px"></h5>
         </div>
         <!--error message-->
 
@@ -350,16 +369,14 @@
 
 
     navigator.geolocation.getCurrentPosition(function (position) {
-        userLat = position.coords.latitude;
-        userLon = position.coords.longitude;
+        let userLat = position.coords.latitude;
+        let userLon = position.coords.longitude;
         console.log(position);
         console.log(position.coords.latitude)
         console.log(position.coords.longitude)
         let userMarker = L.marker([position.coords.latitude,position.coords.longitude]).bindPopup("Your location");
         map.addLayer(userMarker);
     })
-
-
 
     let lat = document.getElementById("lat").value;
     let lon = document.getElementById("lon").value;
