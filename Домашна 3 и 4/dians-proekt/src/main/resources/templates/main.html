@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">`
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css"/>
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
@@ -86,7 +86,7 @@
         }
 
         /* Banks List */
-        #banks div:hover, .same-as-selected {
+        #banks div:hover {
             background-color: rgba(0, 0, 0, 0.1);
         }
 
@@ -114,10 +114,12 @@
         #mapCanvas h1 {
             color: whitesmoke;
         }
+
         /*form*/
-        #formDiv{
+        #formDiv {
             display: inline-block;
         }
+
         /*map dropdownList */
         #dropdownBankChoice {
             float: left;
@@ -161,10 +163,6 @@
             color: whitesmoke;
         }
 
-        #checkBoxButtons {
-            /*temp*/
-        }
-
         #checkBoxButtons > span:nth-child(1) {
             margin-right: 10px;
         }
@@ -183,8 +181,6 @@
             background-color: #737B80;
             padding: 5px 20px 5px 20px;
         }
-
-
 
         #labelBanks {
             color: whitesmoke;
@@ -205,10 +201,12 @@
             margin: auto;
             border-radius: 10px;
         }
-        #searchBox{
+
+        #searchBox {
             margin-bottom: 40px;
         }
-        #searchBar{
+
+        #searchBar {
             border-radius: 8px;
             height: 25px;
             width: 300px;
@@ -222,6 +220,7 @@
             font-size: 24px;
             cursor: pointer;
         }
+
         /* footer */
         .footer {
             background-color: #333;
@@ -285,7 +284,7 @@
                 <h4 id="labelBanks">Одберете ја посакуваната банка:</h4>
                 <label for="banks"></label>
                 <select name="bankChoice" id="banks">
-                    <option disabled selected value> -- изберете опција -- </option>
+                    <option disabled selected value> -- изберете опција --</option>
                     <option value="Komercijalna banka">Комерцијална банка</option>
                     <option value="Sparkasse">Sparkasse банка</option>
                     <option value="Halkbank">Halk банка</option>
@@ -369,33 +368,24 @@
 
 
     navigator.geolocation.getCurrentPosition(function (position) {
-        let userLat = position.coords.latitude;
-        let userLon = position.coords.longitude;
-        console.log(position);
-        console.log(position.coords.latitude)
-        console.log(position.coords.longitude)
-        let userMarker = L.marker([position.coords.latitude,position.coords.longitude]).bindPopup("Your location");
+        let userMarker = L.marker([position.coords.latitude, position.coords.longitude]).bindPopup("Your location");
         map.addLayer(userMarker);
     })
 
-    let lat = document.getElementById("lat").value;
-    let lon = document.getElementById("lon").value;
+    let latitude = document.getElementById("lat").value;
+    let longitude = document.getElementById("lon").value;
     let bankName = document.getElementById("bankName").value;
 
-    if (lat != null && lon != null) {
-        console.log(bankName);
-        console.log(lat);
-        console.log(lon);
-        let marker = new L.Marker([lat, lon]).bindPopup(bankName);
+    if (latitude != null && longitude != null) {
+        let marker = new L.Marker([latitude, longitude]).bindPopup(bankName);
         map.addLayer(marker);
 
         L.Routing.control({
             waypoints: [
                 L.latLng([userLat, userLon]),
-                L.latLng([lat, lon])
+                L.latLng([latitude, longitude])
             ]
         }).addTo(map);
-
     }
 </script>
 </html>
