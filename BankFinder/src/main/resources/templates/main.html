@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css"/>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+            crossorigin=""></script>
+    <link rel="stylesheet" href="//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css"
+          type="text/css">
+    <script src="//unpkg.com/leaflet-gesture-handling"></script>
+    <title>Home page</title>
+    <style>
+        /* whole body */
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            background-image: url("/background.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            scroll-behavior: smooth;
+        }
+
+        #wholeWrapper {
+            width: 70%;
+            background-color: rgba(24, 72, 91, 0.8);
+            margin-left: auto;
+            margin-right: auto;
+            height: 100%;
+            padding-bottom: 50px;
+            padding-top: 50px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        /* NAVBAR */
+        .navbarDiv {
+            display: block;
+        }
+
+        .mainNavbar {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            width: auto;
+        }
+
+        .navbarDiv li {
+            float: right;
+        }
+
+        .navbarDiv li a {
+            display: block;
+            color: whitesmoke;
+            text-align: center;
+            padding: 14px 30px;
+            text-decoration: none;
+        }
+
+        .mainNavbar > li:nth-child(1) {
+            margin-right: 200px;
+        }
+
+        .navbarDiv ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        .active {
+            background-color: #1BB05D;
+        }
+
+        /* Banks List */
+        #banks div:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        #listBanks a {
+            padding-right: 20px;
+        }
+
+        #listBanks a img {
+            width: 100px;
+            height: 100px;
+            margin-top: 20px;
+            border: 2px solid #1BB05D;
+            border-radius: 5px;
+        }
+
+        #listBanks h1 {
+            color: whitesmoke;
+        }
+
+        /* map */
+        #mapCanvas {
+            margin-top: 100px;
+        }
+
+        #mapCanvas h1 {
+            color: whitesmoke;
+        }
+
+        /*form*/
+        #formDiv {
+            display: inline-block;
+        }
+
+        /*map dropdownList */
+        #dropdownBankChoice {
+            float: left;
+            background-color: #333;
+            border-radius: 15px;
+            height: 100px;
+            width: 350px;
+            margin-left: 200px;
+            margin-right: 50px;
+            justify-content: center;
+        }
+
+        /* map checkBoxButtons */
+        #buttonChoices {
+            float: left;
+            background-color: #333;
+            border-radius: 15px;
+            height: 100px;
+            width: 350px;
+            margin-right: 50px;
+            text-align: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .filter-btn {
+            border-radius: 8px;
+            border: 2px solid #333;
+            background-color: #737B80;
+            color: whitesmoke;
+            width: 150px;
+            cursor: pointer;
+            padding: 5px;
+            margin-top: 30px;
+            margin-right: 170px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        #buttonChoices h4 {
+            color: whitesmoke;
+        }
+
+        #checkBoxButtons > span:nth-child(1) {
+            margin-right: 10px;
+        }
+
+        #checkBoxButtons > span:nth-child(2) {
+            margin-right: 10px;
+        }
+
+        .checkBoxButtonName {
+            border-radius: 12px;
+            padding-left: 10px;
+        }
+
+        #buttonChoices .checkBoxButtonName {
+            color: whitesmoke;
+            background-color: #737B80;
+            padding: 5px 20px 5px 20px;
+        }
+
+        #labelBanks {
+            color: whitesmoke;
+        }
+
+        #banks {
+            padding: 4px 10px 5px 20px;
+            color: whitesmoke;
+            background-color: #737B80;
+            border-radius: 12px;
+            margin-top: -5px;
+        }
+
+        /* map */
+        #map {
+            width: 80%;
+            height: 600px;
+            margin: auto;
+            border-radius: 10px;
+        }
+
+        #searchBox {
+            margin-bottom: 40px;
+        }
+
+        #searchBar {
+            border-radius: 8px;
+            height: 25px;
+            width: 300px;
+            font-size: 16px;
+            border: 3px solid #333;
+        }
+
+        .search-btn {
+            background-color: rgba(24, 72, 91, 0);
+            border: 0;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* footer */
+        .footer {
+            background-color: #333;
+            height: 50px;
+            background-size: cover;
+            width: 100%;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .footer p {
+            color: whitesmoke;
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 0;
+        }
+    </style>
+
+</head>
+<body>
+
+<!--navbar-->
+<div class="navbarDiv">
+    <ul class="mainNavbar">
+        <li><a class="active" href="/home">Home</a></li>
+        <li><a href="/about">About</a></li>
+    </ul>
+</div>
+<!--navbar-->
+
+<div class="center" id="wholeWrapper">
+
+    <!--list banks-->
+    <div class="center" id="listBanks">
+        <a href="https://halkbank.mk/" target="_blank"><img th:src="@{/halkbank.jpg}" style="width: 100px" height=""
+                                                            alt="halkbank picture"></a>
+        <a href="https://www.kb.com.mk/" target="_blank"><img th:src="@{/komercijalna.jpg}" style="width: 100px"
+                                                              alt="komercijalna picture"></a>
+        <a href="https://sparkasse.mk/" target="_blank"><img th:src="@{/sparkasse.jpg}" style="width: 100px"
+                                                             alt="sparkasse picture"></a>
+        <a href="https://nlb.mk/" target="_blank"><img th:src="@{/nlb.jpg}" style="width: 100px" alt="nlb picture"></a>
+        <a href="https://www.stb.com.mk/" target="_blank"><img th:src="@{/stopanska.jpg}" style="width: 100px"
+                                                               alt="stopanska picture"></a>
+        <a href="https://www.ttk.com.mk/" target="_blank"><img th:src="@{/ttk.jpg}" style="width: 100px"
+                                                               alt="ttk picture"></a>
+        <a href="https://www.unibank.mk/" target="_blank"><img th:src="@{/uni.jpg}" style="width: 100px"
+                                                               alt="unibank picture"></a>
+        <a href="https://silkroadbank.com.mk/" target="_blank"><img th:src="@{silkroad.jpg}" style="width: 100px"
+                                                                    alt="silkroad picture"></a>
+        <a href="https://www.pcb.mk/private_clients.nspx" target="_blank"><img th:src="@{/procredit.jpg}"
+                                                                               style="width: 100px"
+                                                                               alt="procredit picture"></a>
+    </div>
+    <!--list banks-->
+
+    <div class="center" id="mapCanvas">
+
+        <!--filter-->
+        <form id="formDiv" th:method="get" th:action="@{/home}">
+            <div id="dropdownBankChoice">
+                <h4 id="labelBanks">Одберете ја посакуваната банка:</h4>
+                <label for="banks"></label>
+                <select name="bankChoice" id="banks">
+                    <option disabled selected value> -- изберете опција --</option>
+                    <option value="Komercijalna banka">Комерцијална банка</option>
+                    <option value="Sparkasse">Sparkasse банка</option>
+                    <option value="Halkbank">Halk банка</option>
+                    <option value="Nlb banka">NLB банка</option>
+                    <option value="Stopanska banka">Стопанска банка</option>
+                    <option value="Ttk banka">TTK банка</option>
+                    <option value="Unibank">УНИ банка</option>
+                    <option value="Procredit banka">Procredit банка</option>
+                    <option value="Silkroad banka">Silkroad банка</option>
+                </select>
+            </div>
+
+            <div id="buttonChoices">
+                <h4>Селектирајте ја посакуваната опција:</h4>
+                <div id="checkBoxButtons">
+                    <span class="checkBoxButtonName">Филијалa
+                        <input type="radio" name="type" value="Bank" id="bank">
+                        <span class="checkmark"></span>
+                    </span>
+                    <span class="checkBoxButtonName">ATM
+                        <input type="radio" name="type" value="ATM" id="atm">
+                        <span class="checkmark"></span>
+                    </span>
+                </div>
+            </div>
+            <input type="submit" th:value="Филтрирај" class="filter-btn"/>
+        </form>
+        <!--filter-->
+
+
+        <!--search-->
+        <div id="searchBox">
+            <form th:method="get" th:action="@{/home}">
+                <input type="text" placeholder="Барај..." name="search" id="searchBar">
+                <input type="submit" value="&#128269;" class="search-btn">
+            </form>
+        </div>
+        <!--search-->
+
+
+        <!--error message-->
+        <div th:if="${hasError}" id="error-msg">
+            <h5 th:text="${error}" style="color: whitesmoke; font-size: 16px"></h5>
+        </div>
+        <!--error message-->
+
+        <!--map-->
+        <div th:if="${bank} != null">
+            <input type="hidden" th:value="${bank.getLongitude()}" id="lon">
+            <input type="hidden" th:value="${bank.getLatitude()}" id="lat">
+            <input type="hidden" th:value="${bank.getName()}" id="bankName">
+        </div>
+        <div id="map"></div>
+        <!--map-->
+
+    </div>
+</div>
+
+<!--footer-->
+<div class="footer">
+    <p>&copy; 2022 | Made by <span>team Xmen</span></p>
+</div>
+<!--footer-->
+
+</body>
+
+<script th:inline="javascript">
+
+    let L = window.L;
+
+    let map = L.map('map', {
+        center: [42.0020, 21.4032],
+        zoom: 14,
+        gestureHandling: true
+    });
+
+    let layer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    });
+    map.addLayer(layer);
+
+
+    navigator.geolocation.getCurrentPosition(function (position) {
+        let userMarker = L.marker([position.coords.latitude, position.coords.longitude]).bindPopup("Your location");
+        map.addLayer(userMarker);
+    })
+
+    let latitude = document.getElementById("lat").value;
+    let longitude = document.getElementById("lon").value;
+    let bankName = document.getElementById("bankName").value;
+
+    if (latitude != null && longitude != null) {
+        let marker = new L.Marker([latitude, longitude]).bindPopup(bankName);
+        map.addLayer(marker);
+
+        L.Routing.control({
+            waypoints: [
+                L.latLng([userLat, userLon]),
+                L.latLng([latitude, longitude])
+            ]
+        }).addTo(map);
+    }
+</script>
+</html>

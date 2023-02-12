@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>About Us</title>
+    <style>
+        /* whole body */
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            background: #18485B;
+            scroll-behavior: smooth;
+        }
+
+        #wholeWrapper {
+            width: 80%;
+            background-color: #18485B;
+            margin-left: auto;
+            margin-right: auto;
+            height: auto;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        /* NAVBAR */
+        .navbarDiv {
+            display: block;
+        }
+
+        .mainNavbar {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            width: auto;
+        }
+
+        .navbarDiv li {
+            float: right;
+        }
+
+        .navbarDiv li a {
+            display: block;
+            color: whitesmoke;
+            text-align: center;
+            padding: 14px 30px;
+            text-decoration: none;
+        }
+
+        .mainNavbar > li:nth-child(1) {
+            margin-right: 200px;
+        }
+
+        .navbarDiv ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        .active {
+            background-color: #1BB05D;
+        }
+
+        /* footer */
+        .footer {
+            background-color: #333;
+            height: 50px;
+            background-size: cover;
+            width: 100%;
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: 50px;
+        }
+
+        .footer p {
+            color: whitesmoke;
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 0;
+        }
+
+        /*About Section */
+        #bankAbout {
+            width: 80%;
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: 30px;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 350px;
+            height: 270px;
+            border: 1px solid #f1f1f1;
+            perspective: 1000px;
+            display: inline-grid;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
+        .flip-card-front {
+            background-color: #bbb;
+            color: black;
+        }
+
+        .flip-card-back {
+            background-color: #333;
+            color: white;
+            transform: rotateY(180deg);
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        .flip-card-back p {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+<div class="navbarDiv">
+    <ul class="mainNavbar">
+        <li><a href="/home">Home</a></li>
+        <li><a class="active" href="/about">About</a></li>
+    </ul>
+</div>
+<div class="center" id="wholeWrapper">
+    <div id="bankAbout">
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img th:src="@{/halkbank.jpg}" alt="HalkBank" style="width:350px;height:270px;">
+                </div>
+                <div class="flip-card-back">
+                    <p>Halkbank is a Turkish bank, first incorporated in 1933 as a state-owned bank. After growing
+                        throughout much of the twentieth century,
+                        it began absorbing smaller-sized state banks around the turn of the millennium.
+                        Halkbank is now a publicly traded company, although the majority stakeholder remains the Turkish
+                        government.
+                        Halkbank is a bank that offers vehicle loans, housing loans, consumer loans and commercial
+                        loans.
+                        A number of scandals and controversies involving the bank emerged in the 2010s, some of which
+                        culminated in arrests of its executives.</p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img th:src="@{/komercijalna.jpg}" alt="Komercijalna" style="width:350px;height:270px;">
+                </div>
+                <div class="flip-card-back">
+                    <p>It was established in 1955 as Komunalna Banka (business bank for city of Skopje) and it was
+                        specialized for approving housing loans and financing construction operations.
+                        Since 1955, it has gone through several transformations characteristic for the banking system of
+                        the region.
+                        Today, Komercijalna Banka Skopje is a universal bank licensed for performing all types of
+                        banking operations, combining the functions of commercial banking,
+                        savings deposits and investments, as well as banking services provided to the citizens and
+                        enterprises in the domain of domestic and international payment operations.</p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img th:src="@{/sparkasse.jpg}" alt="Sparkasse" style="width:350px;height:270px;">
+                </div>
+                <div class="flip-card-back">
+                    <p>The Sparkassen-Finanzgruppe ("Savings Banks Financial Group") is a network of public banks that
+                        together form the largest financial services group in Germany and in all of Europe.
+                        Its name refers to local government-controlled savings banks that are known in German as
+                        Sparkasse, plural Sparkassen.
+                        Its activity is overwhelmingly located in Germany.</p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img th:src="@{/nlb.jpg}" alt="NLB" style="width:350px;height:270px;">
+                </div>
+                <div class="flip-card-back">
+                    <p>NLB AD - Skopje - Macedonian universal bank, part of the "Nova Ljubljanska banka" group from
+                        Slovenia.
+                        It performs all types of banking work. Measured according to the size of assets, NLB Bank is the
+                        third largest bank in Macedonia.
+                        NLB Tutunska banka was founded in 1985, as an internal bank of the tobacco industry in
+                        Macedonia,
+                        under the name Internal bank of SOZT "Yugototun". In 1993, the bank was transformed into a
+                        joint-stock company,
+                        with the name "Tutunska banka" AD Skopje, in which tobacco companies from Macedonia were the
+                        founders and shareholders.</p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img th:src="@{/stopanska.jpg}" alt="Stopanska" style="width:350px;height:270px;">
+                </div>
+                <div class="flip-card-back">
+                    <p>In the modern, ever-changing world, where personal needs and expectations change and where
+                        customers know more,
+                        demand more and do more, Stopanska Banka seeks to provide new opportunities by offering
+                        financial products
+                        and services that correspond to these changes and that are easy to reach through the modern
+                        distribution channels.</p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img th:src="@{/ttk.jpg}" alt="TTK" style="width:350px;height:270px;">
+                </div>
+                <div class="flip-card-back">
+                    <p>TTK Bank AD Skopje — a Macedonian universal bank which, measured by the size of its assets,
+                        belongs to the group of medium-sized banks.
+                        It acts as a joint stock company in the capacity of a legal entity and has been operating under
+                        this name since July 1, 2006,
+                        as a result of the merger of "Tetex-Credit Bank" AD Skopje and "Tetovska Banka" AD Tetovo.</p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img th:src="@{/uni.jpg}" alt="UNI" style="width:350px;height:270px;">
+                </div>
+                <div class="flip-card-back">
+                    <p>Universal Investment Bank AD Skopje, known as UNIBanka, is a Macedonian universal bank, which,
+                        measured by the size of its assets,
+                        belongs to the group of medium-sized banks. It offers a wide range of banking activities,
+                        starting from collecting deposits,
+                        approving loans to legal and natural persons, services in domestic and international payment
+                        transactions,
+                        to mediation in the purchase and sale of foreign exchange, securities and more.</p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img th:src="@{/silkroad.jpg}" alt="Silkroad" style="width:350px;height:270px;">
+                </div>
+                <div class="flip-card-back">
+                    <p>Discretion and respect are the standards of the bank.
+                        Silk Road Bank AD Skopje distinguishes from the other banks in the country by following the
+                        criteria of the modern banking principles
+                        offered through client oriented services. The values and principles of its operation are the
+                        clients who get the services smooth as silk.
+                        Silk Road Bank AD Skopje shall continue its business strategy oriented towards the modern
+                        aspects of the banking business,
+                        improved products and innovations, thus confirming its image of a dynamic and state-of-the-art
+                        European Bank
+                        which follows the market demands and meets the needs of its clients. </p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img th:src="@{/procredit.jpg}" alt="ProCredit" style="width:350px;height:270px;">
+                </div>
+                <div class="flip-card-back">
+                    <p>ProCredit is a development-oriented bank. We offer a high-quality service for small and
+                        medium-sized enterprises,
+                        as well as for individuals who have the opportunity to save and who prefer banking services
+                        through electronic channels.
+                        In our work, we adhere to several basic principles: we value transparency in communication with
+                        our clients,
+                        we do not promote consumer loans, we strive with our work to contribute to the preservation of
+                        the environment,
+                        and we offer services based on understanding the situation of each client and good financial
+                        analysis.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <p>&copy; 2022 | Made by <span>team Xmen</span></p>
+</div>
+</body>
+</html>
